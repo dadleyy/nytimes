@@ -1,0 +1,15 @@
+lib
+npm-debug.log
+/coverage
+.DS_Store
+*.swp
+*.rdb
+*.tar.gz
+test-results.xml
+.env
+/typings
+
+tmp
+node_modules
+bower_components
+dist

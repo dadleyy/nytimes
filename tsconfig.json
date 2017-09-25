@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module"        : "amd",
+    "target"        : "es5",
+    "noImplicitAny" : false,
+    "sourceMap"     : true,
+    "allowJs"       : false,
+    "baseUrl"       : "./src",
+    "jsx"           : "react",
+    "declaration"   : false,
+    "typeRoots"     : [],
+    "lib"           : ["DOM","ES5","ScriptHost", "ES2015"],
+    "paths"         : {
+      "news/*": ["./*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ]
+}
