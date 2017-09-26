@@ -2,6 +2,11 @@ import * as React from "react";
 import { render } from "react-dom";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import routes from "news/routes";
+import { load as loadLocale } from "news/services/i18n";
+import Header from "news/components/header";
+import ApplicationError from "news/components/application-error";
+
+const main = document.getElementById("main");
 
 class Application extends React.Component<any, any> {
 
@@ -13,9 +18,23 @@ class Application extends React.Component<any, any> {
       routeList.push(<Route {...r} />);
     }
 
-    return (<Router><Switch>{routeList}</Switch></Router>);
+    return (
+      <Router>
+        <Switch>
+          <Header />
+          {routeList}
+        </Switch>
+      </Router>
+    );
   }
 
 }
 
-render(<Application />, document.getElementById("main"));
+function start() : void {
+  render(<Application />, main);
+}
+
+loadLocale("en").then(start).catch(e => {
+  console.error(e);
+  render(<ApplicationError />, main);
+});

@@ -1,0 +1,5 @@
+@for $i from 0 through 10
+  $px-amt: $i + unquote("px")
+
+  .shadow-#{$i}
+    box-shadow: 0px 0px $px-amt rgba(0,0,0,0.2)

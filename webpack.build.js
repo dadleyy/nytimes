@@ -1,6 +1,7 @@
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const pkg = require("./package.json");
 const path = require("path");
-const destination = path.resolve(__dirname, "dist/news/assets");
+const destination = path.resolve(__dirname, pkg.config.asset_dist_dir);
 
 module.exports = {
   "entry": path.join(destination, "main"),

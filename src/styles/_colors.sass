@@ -1,0 +1,21 @@
+@each $value, $name in $color-list
+  .fg-#{$name}
+    color: unquote($value)
+
+  .bc-#{$name}
+    border-color: unquote($value)
+
+  .bc-left-#{$name}
+    border-left-color: unquote($value)
+
+  .bc-right-#{$name}
+    border-right-color: unquote($value)
+
+  .bc-bottom-#{$name}
+    border-bottom-color: unquote($value)
+
+  .bc-top-#{$name}
+    border-top-color: unquote($value)
+
+  .bg-#{$name}
+    background-color: unquote($value)

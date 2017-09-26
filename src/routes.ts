@@ -3,7 +3,7 @@ import NotFound from "news/components/not-found";
 
 export default [{
   exact: true,
-  path: "/whoa",
+  path: "/news/:category",
   key: "whoa",
   component: Home
 }, {

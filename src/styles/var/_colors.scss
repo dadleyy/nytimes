@@ -1,0 +1,9 @@
+$dark-blue-green: rgb(39,51,56);
+$active-blue: rgb(1,156,222);
+
+$color-list: (
+  'rgb(0,0,0)': '00',
+  'rgb(255,255,255)': '01',
+  $dark-blue-green: '02',
+  $active-blue: '03'
+)

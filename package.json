@@ -5,13 +5,17 @@
   "config": {
     "dist_dir": "./dist/news",
     "asset_dist_dir": "./dist/news/assets",
+    "locale_dist_dir": "./dist/news/i18n/definitions",
     "main_js_src": "./dist/news/assets/main.js"
   },
   "scripts": {
+    "build:styles": "node-sass -o $npm_package_config_asset_dist_dir ./src/main.sass",
     "build:html": "pug -o $npm_package_config_dist_dir ./src/index.pug",
     "build:scripts": "tsc -p ./tsconfig.json -outDir $npm_package_config_asset_dist_dir",
     "build:optimize": "BUNDLED=true npm run build:html && webpack --config=./webpack.build.js",
-    "build": "npm run build:scripts && npm run build:html",
+    "build:i18n:en": "yaml2json ./i18n/en.yaml > $npm_package_config_locale_dist_dir/en.json",
+    "build:i18n": "mkdir -p $npm_package_config_locale_dist_dir && npm run build:i18n:en",
+    "build": "npm run build:scripts && npm run build:html && npm run build:styles",
     "lint": "tslint -c ./tslint.json -p ./tsconfig.json",
     "test": "karma start --single-run=true",
     "start": "live-server --middleware=spa-ignore-assets ./dist/news"
@@ -44,14 +48,17 @@
     "karma-tslint": "1.0.2",
     "karma-typescript": "3.0.7",
     "live-server": "^1.2.0",
+    "node-sass": "^4.5.3",
     "pug-cli": "^1.0.0-alpha6",
     "requirejs": "^2.3.5",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2",
     "uglifyjs-webpack-plugin": "^0.4.6",
-    "webpack": "^3.6.0"
+    "webpack": "^3.6.0",
+    "yamljs": "^0.3.0"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2"

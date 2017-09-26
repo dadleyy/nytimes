@@ -1,0 +1,13 @@
+@for $i from 0 through $padding-steps
+  $padding-amt: $i * $padding-inc
+
+  .padding-#{$i}
+    padding: $padding-amt + unquote("rem")
+
+  .padding-lr-#{$i}
+    padding-left: $padding-amt + unquote("rem")
+    padding-right: $padding-amt + unquote("rem")
+
+  .padding-tb-#{$i}
+    padding-top: $padding-amt + unquote("rem")
+    padding-bottom: $padding-amt + unquote("rem")

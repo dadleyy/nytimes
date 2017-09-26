@@ -1,0 +1,17 @@
+html, body
+  font-family: sans-serif
+
+.text-plain
+  text-decoration: none
+
+.upper
+  text-transform: uppercase
+
+.bold
+  font-weight: bold
+
+@for $i from 1 through $font-size-steps
+  $amt: ($i * $font-size-inc) + unquote("rem")
+
+  .fs-#{$i}
+    font-size: $amt

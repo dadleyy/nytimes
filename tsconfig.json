@@ -8,14 +8,10 @@
     "baseUrl": "src",
     "jsx": "react",
     "declaration": false,
-    "typeRoots": [],
     "lib": ["DOM","ES5","ScriptHost", "ES2015"],
     "paths": {
-      "news/*": ["./*"]
+      "news/*": ["./*"],
+      "axios": ["../node_modules/axios/index.d.ts"]
     }
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ]
+  }
 }
