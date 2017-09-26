@@ -27,27 +27,15 @@ for(var file_name in files) {
 /* Once the browser-side vendor libraries have been loaded (namely react + react-dom, this function will load in the 
  * tests and prompt karma to begin test execution.
  */
-function start(React, ReactDOM, ReactRouterDOM) {
-  window.React    = React;
-  window.ReactDOM = ReactDOM;
-  window.ReactRouterDOM = ReactRouterDOM;
+function start() {
   require(tests, karma.start);
-}
-
-/* Once requirejs is properly configured, this function is resposible for loadin in (via requiresjs) the vendor 
- * libraries required at runtime. Important: These libraries should be proper es5 amd modules:
- *
- * define([], function(){})
- */
-function expose() {
-  require(["react", "react-dom", "react-router-dom"], start);
 }
 
 // Configure requirejs for runtime. `/base` is the karma base url; the root of the repository in our case.
 require.config({
   baseUrl  : "/base/src",
   shim     : {},
-  callback : expose, 
+  callback : start, 
 
   paths    : {
     "test-helpers": "/base/test/helpers",

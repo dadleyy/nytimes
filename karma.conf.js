@@ -8,27 +8,24 @@ module.exports = function(config) {
   let ts_preprocessors = process.env["DISABLE_LINT"] ? ["karma-typescript"] : ["tslint", "karma-typescript"];
 
   let preprocessors = {
-    "src/**/*.ts"  : ts_preprocessors,
-    "src/**/*.tsx" : ts_preprocessors,
+    "src/**/*.ts": ts_preprocessors,
+    "src/**/*.tsx": ts_preprocessors,
 
-    "test/unit/**/*.js"      : ["babel"],
-    "test/unit/**/*.jsx"     : ["babel"],
-    "test/helpers.js"        : ["babel"],
-    "test/data/**/*.js"      : ["babel"],
-    "test/delegates/**/*.js" : ["babel"],
-    "test/dom/**/*.js" : ["babel"],
-    "test/unit.js"           : ["babelexternal"]
+    "test/unit/**/*.js": ["babel"],
+    "test/unit/**/*.jsx": ["babel"],
+    "test/helpers.jsx": ["babel"],
+    "test/dom/**/*.js": ["babel"],
+    "test/unit.js": ["babelexternal"]
   };
 
   let files = [
-    "./node_modules/babel-polyfill/dist/polyfill.js",
     {pattern: "./node_modules/react/dist/react.js", included: false},
     {pattern: "./node_modules/react-dom/dist/react-dom.js", included: false},
     {pattern: "./node_modules/react-router-dom/umd/react-router-dom.js", included: false},
 
-    {pattern: "./test/data/**/*.js", included: false},
-    {pattern: "./test/delegates/**/*.js", included: false},
-    {pattern: "./test/dom/**/*.js", included: false},
+    // {pattern: "./test/data/**/*.js", included: false},
+    // {pattern: "./test/delegates/**/*.js", included: false},
+    // {pattern: "./test/dom/**/*.js", included: false},
 
     {pattern: "./test/unit/**/*.spec.js", included: false},
     {pattern: "./test/unit/**/*.spec.jsx", included: false},
@@ -36,7 +33,7 @@ module.exports = function(config) {
     {pattern: "./src/**/*.ts", included: false},
     {pattern: "./src/**/*.tsx", included: false},
 
-    {pattern: "./test/helpers.js", included: false},
+    {pattern: "./test/helpers.jsx", included: false},
 
     "./test/unit.js"
   ];
