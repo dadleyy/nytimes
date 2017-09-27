@@ -1,9 +1,6 @@
 import axios from "axios";
 import config from "news/config/i18n";
 
-const a = console;
-a.log(config);
-
 type Cache = {
   active : string;
   [key : string] : any;

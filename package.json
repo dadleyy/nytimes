@@ -6,20 +6,20 @@
     "dist_dir": "./dist/news",
     "asset_dist_dir": "./dist/news/assets",
     "locale_dist_dir": "./dist/news/i18n/definitions",
-    "main_js_src": "./dist/news/assets/main.js"
+    "main_js_src": "./dist/news/assets/main.js",
+    "proxy_flags": "--proxy=/api:https://api.nytimes.com"
   },
   "scripts": {
     "clean": "rm -rf ./dist",
     "build:styles": "node-sass -o $npm_package_config_asset_dist_dir ./src/main.sass",
-    "build:html": "pug -o $npm_package_config_dist_dir ./src/index.pug",
+    "build:html": "pug -o $npm_package_config_dist_dir --obj=./config.json ./src/index.pug",
     "build:scripts": "tsc -p ./tsconfig.json -outDir $npm_package_config_asset_dist_dir",
-    "build:optimize": "BUNDLED=true npm run build:html && webpack --config=./webpack.build.js",
     "build:i18n:en": "yaml2json ./i18n/en.yaml > $npm_package_config_locale_dist_dir/en.json",
     "build:i18n": "mkdir -p $npm_package_config_locale_dist_dir && npm run build:i18n:en",
     "build": "npm run build:scripts && npm run build:html && npm run build:styles && npm run build:i18n",
     "lint": "tslint -c ./tslint.json -p ./tsconfig.json",
     "test": "karma start --single-run=true",
-    "start": "live-server --middleware=spa-ignore-assets ./dist/news"
+    "start": "NODE_TLS_REJECT_UNAUTHORIZED=0 live-server --middleware=spa-ignore-assets $npm_package_config_proxy_flags $npm_package_config_dist_dir"
   },
   "author": "Danny Hadley <dadleyy@gmail.com>",
   "license": "MIT",
@@ -28,6 +28,7 @@
     "@types/react-dom": "15.5.4",
     "@types/react-router": "^4.0.15",
     "@types/react-router-dom": "^4.0.7",
+    "@types/requirejs": "^2.1.31",
     "ajv": "^5.2.3",
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "6.18.0",
@@ -50,13 +51,12 @@
     "karma-tslint": "1.0.2",
     "karma-typescript": "3.0.7",
     "live-server": "^1.2.0",
+    "node-http-proxy": "^0.2.3",
     "node-sass": "^4.5.3",
     "pug-cli": "^1.0.0-alpha6",
     "requirejs": "^2.3.5",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2",
-    "uglifyjs-webpack-plugin": "^0.4.6",
-    "webpack": "^3.6.0",
     "yamljs": "^0.3.0"
   },
   "dependencies": {

@@ -24,7 +24,7 @@ const Header : React.SFC<any> = function(props : any) : JSX.Element {
         <NavLink to="/news/us" className="nav-link" activeClassName="active-nav">{t("nav.us")}</NavLink>
         <NavLink to="/news/politics" className="nav-link" activeClassName="active-nav">{t("nav.politics")}</NavLink>
         <NavLink to="/news/ny" className="nav-link" activeClassName="active-nav">{t("nav.ny")}</NavLink>
-        <NavLink to="/news/more" className="nav-link" activeClassName="active-nav">{t("nav.more")}</NavLink>
+        <NavLink to="/categories" className="nav-link" activeClassName="active-nav">{t("nav.more")}</NavLink>
       </nav>
     </section>
   );

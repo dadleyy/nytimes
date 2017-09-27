@@ -4,6 +4,7 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import routes from "news/routes";
 import { load as loadLocale } from "news/services/i18n";
 import Header from "news/components/header";
+import RouteLoader from "news/components/hoc/route-loader";
 import ApplicationError from "news/components/application-error";
 
 const main = document.getElementById("main");
@@ -15,7 +16,7 @@ class Application extends React.Component<any, any> {
 
     for (let i = 0, c = routes.length; i < c; i++) {
       const r = routes[i];
-      routeList.push(<Route {...r} />);
+      routeList.push(<Route {...r} component={r.componentModule && RouteLoader(r.componentModule, r.resolve)} />);
     }
 
     return (
