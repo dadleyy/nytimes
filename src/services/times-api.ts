@@ -11,16 +11,16 @@ export interface SearchPagination {
 
 export enum SECTION {
   HOME = "Home"
-};
+}
 
 export class ArticleSearchBlueprint {
-  public sections? : Array<SECTION> = [SECTION.HOME];
+  sections? : Array<SECTION> = [SECTION.HOME];
 
   constructor(sections? : Array<SECTION>) {
     this.sections = sections || [SECTION.HOME];
   }
 
-  toString() {
+  toString() : string {
     const queries = [];
 
     if(this.sections && this.sections.length) {
@@ -32,14 +32,18 @@ export class ArticleSearchBlueprint {
 
 }
 
-export interface AticleResult {
+export interface ArticleResult {
+  pub_date : string;
 }
 
 export interface TimesMeta {
+  hits : Number;
+  offset : Number;
+  times : Number;
 }
 
 export interface TimesResponse {
-  docs : Array<AticleResult>;
+  docs : Array<ArticleResult>;
   meta : TimesMeta;
 }
 
@@ -60,8 +64,8 @@ export default {
     }
 
     const { data } = await axios.get(`${url}?${params.toString()}`);
+
     return data.response;
   }
-
 
 };

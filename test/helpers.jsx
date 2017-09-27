@@ -33,6 +33,7 @@ export const i18n = {
     try {
       await load("en");
     } catch (e) {
+      throw new Error("dasda");
       console.error(e);
     }
 
@@ -40,6 +41,6 @@ export const i18n = {
   },
 
   unload() {
-  },
+  }
 
 };

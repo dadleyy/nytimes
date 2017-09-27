@@ -3,6 +3,7 @@ export default {
   path: "/categories",
   key: "categories-index",
   componentModule: "news/components/category-list",
-  resolve() {
+  async resolve() : Promise<boolean> {
+    return true;
   }
 };

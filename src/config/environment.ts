@@ -23,6 +23,7 @@ function reload() : EnvironmentConfig {
     try {
       const decoded = atob(m.content);
       cache = JSON.parse(decoded);
+
       return cache;
     } catch (e) {
       m.setAttribute("data-errors", e);
@@ -35,7 +36,7 @@ function reload() : EnvironmentConfig {
 export default {
 
   get times() : NYTimesConfig | null {
-    if (cache != null) {
+    if (cache) {
       return cache.times;
     }
 

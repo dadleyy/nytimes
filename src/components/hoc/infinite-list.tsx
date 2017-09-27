@@ -6,7 +6,7 @@ export interface DataResults {
 }
 
 export interface ListDelegate {
-  load : () => Promise<DataResults>
+  load : () => Promise<DataResults>;
 }
 
 export interface ListProps {
@@ -16,15 +16,13 @@ export interface ListProps {
 function Factory(ItemType : React.ComponentType<ListProps>) : React.ComponentClass<ListProps> {
   class List extends React.Component<ListProps> {
 
-    componentDidMount() {
-      console.log(this);
+    componentDidMount() : void {
     }
 
-    componentWillUnmount() {
-      console.log("unmounting!");
+    componentWillUnmount() : void {
     }
 
-    render() {
+    render() : JSX.Element {
       const { props } = this;
 
       return (
@@ -32,7 +30,7 @@ function Factory(ItemType : React.ComponentType<ListProps>) : React.ComponentCla
           <section className="infinite-list__items"></section>
           <i className="infinite-list__marker" />
         </main>
-      )
+      );
     }
   }
 
