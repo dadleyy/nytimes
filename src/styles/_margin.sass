@@ -1,6 +1,20 @@
-@for $i from 0 through 10
+@for $i from 0 through $margin-steps
+  $amt: ($i * $margin-inc) + unquote("rem")
+
+  .margin-left-#{$i}
+    margin-left: $amt
+
+  .margin-right-#{$i}
+    margin-right: $amt
+
+  .margin-bottom-#{$i}
+    margin-bottom: $amt
+
   .margin-#{$i}
-    margin: $i + unquote("rem")
+    margin: $amt
+
+.margin-left-auto
+  margin-left: auto
 
 .margin-auto
   margin: auto

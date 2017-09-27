@@ -28,20 +28,22 @@ for(var file_name in files) {
  * tests and prompt karma to begin test execution.
  */
 function start() {
-  require(tests, karma.start);
+  require(["react"].concat(tests), karma.start);
 }
 
 // Configure requirejs for runtime. `/base` is the karma base url; the root of the repository in our case.
 require.config({
-  baseUrl  : "/base/src",
+  baseUrl  : "/base",
   shim     : {},
   callback : start, 
 
   paths    : {
     "test-helpers": "/base/test/helpers",
-    "react": "/base/node_modules/react/dist/react",
-    "react-dom": "/base/node_modules/react-dom/dist/react-dom",
+    "react": "/base/node_modules/react/umd/react.development",
+    "react-dom": "/base/node_modules/react-dom/umd/react-dom.development",
     "react-router-dom": "/base/node_modules/react-router-dom/umd/react-router-dom",
+    "axios": "/base/node_modules/axios/dist/axios",
+    "news/config/i18n": "/base/test/config/i18n",
     "test": "/base/test",
     "news": "/base/src"
   }

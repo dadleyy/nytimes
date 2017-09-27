@@ -1,3 +1,12 @@
+.fg-inherit
+  color: inherit
+
+.fg-inherit::-webkit-input-placeholder
+  color: inherit
+
+.fg-inherit::-moz-placeholder
+  color: inherit
+
 @each $value, $name in $color-list
   .fg-#{$name}
     color: unquote($value)

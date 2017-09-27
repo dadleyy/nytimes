@@ -20,10 +20,10 @@ class Application extends React.Component<any, any> {
 
     return (
       <Router>
-        <Switch>
+        <main>
           <Header />
-          {routeList}
-        </Switch>
+          <Switch>{routeList}</Switch>
+        </main>
       </Router>
     );
   }
@@ -35,6 +35,9 @@ function start() : void {
 }
 
 loadLocale("en").then(start).catch(e => {
+  /* tslint:disable */
   console.error(e);
+  /* tslint:enable */
+
   render(<ApplicationError />, main);
 });
