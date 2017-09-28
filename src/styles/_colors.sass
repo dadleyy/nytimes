@@ -8,6 +8,8 @@
   color: inherit
 
 @each $value, $name in $color-list
+  $value: "#{$value}"
+
   .fg-#{$name}
     color: unquote($value)
 

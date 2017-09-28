@@ -22,9 +22,18 @@ body, html
 @import "./styles/colors"
 @import "./styles/display"
 @import "./styles/margin"
+@import "./styles/overflow"
 @import "./styles/padding"
 @import "./styles/borders"
+@import "./styles/positions"
 @import "./styles/dimensions"
+@import "./styles/background"
+
+.inherit-all
+  @extend .fs-inherit
+  @extend .overflow-inherit
+  @extend .ellipsis-inherit
 
 @import "./components/header"
+@import "./components/article-listing"
 @import "./components/form/input"

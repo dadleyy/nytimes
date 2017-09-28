@@ -5,6 +5,7 @@ export interface NYTimesConfig {
 
 export interface EnvironmentConfig {
   times : NYTimesConfig;
+  placeholder_image_url : string;
 }
 
 let cache : EnvironmentConfig | null = null;
@@ -35,8 +36,16 @@ function reload() : EnvironmentConfig {
 
 export default {
 
+  get placeholder_image_url() : string {
+    if(cache) {
+      return cache.placeholder_image_url;
+    }
+
+    return reload() ? cache.placeholder_image_url : null;
+  },
+
   get times() : NYTimesConfig | null {
-    if (cache) {
+    if(cache) {
       return cache.times;
     }
 

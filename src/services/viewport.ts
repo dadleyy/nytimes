@@ -10,7 +10,7 @@ export type ViewportEventListener<T> = (e : T) => void;
 
 interface ViewportListener {
   id : ViewportListenerId;
-  eventType : string;
+  event_type : string;
   handler : ViewportEventListener<any>;
   context? : any;
 }
@@ -52,7 +52,7 @@ function scrollStart() : void {
   for(let i = 0, c = listeners.length; i < c; i++) {
     const listener = listeners[i];
 
-    if(listener.eventType !== EVENT_TYPES.SCROLL) {
+    if(listener.event_type !== EVENT_TYPES.SCROLL) {
       continue;
     }
 
@@ -66,7 +66,7 @@ function scrollStart() : void {
   requestAnimationFrame(scrollStart);
 }
 
-const docEvents : { [key : string] : EventListener } = {
+const doc_events : { [key : string] : EventListener } = {
   scroll() : void {
     if(!state.scrolling.active) {
       state.scrolling.active = true;
@@ -84,9 +84,9 @@ export default {
     return window.outerHeight;
   },
 
-  on<T>(eventType : string, handler : ViewportEventListener<T>, context? : any ) : ViewportListenerId {
+  on<T>(event_type : string, handler : ViewportEventListener<T>, context? : any ) : ViewportListenerId {
     const id = uuid();
-    state.listeners.push({ eventType, id, handler, context });
+    state.listeners.push({ event_type, id, handler, context });
 
     return id;
   },
@@ -118,8 +118,8 @@ export default {
 
     state.listeners.length = 0;
 
-    for(const key in docEvents) {
-      const handler = docEvents[key];
+    for(const key in doc_events) {
+      const handler = doc_events[key];
       window.removeEventListener(key, handler);
     }
 
@@ -131,8 +131,8 @@ export default {
       return;
     }
 
-    for(const key in docEvents) {
-      const handler = docEvents[key];
+    for(const key in doc_events) {
+      const handler = doc_events[key];
       window.addEventListener(key, handler);
     }
 

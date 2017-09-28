@@ -1,0 +1,40 @@
+.article-listing
+  @extend .margin-bottom-10
+  @extend .shadow-2
+  @extend .flex
+
+.article-listing__title
+  @extend .margin-bottom-8
+  @extend .bold
+  @extend .fs-8
+  @extend .no-wrap
+  @extend .ellipsis
+  @extend .overflow-hidden
+
+.article-listing__snippet
+  @extend .margin-bottom-20
+  @extend .fs-5
+  @extend .lh-8
+  @extend .fg-04
+
+.article-listing__byline
+  @extend .ff-open.light
+  @extend .fg-05
+  @extend .position-absolute
+  @extend .padding-tb-2
+  bottom: 0
+
+.article-listing__content
+  @extend .position-relative
+  @extend .flex-item-3
+  @extend .margin-tb-8
+  @extend .padding-lr-7
+  @extend .overflow-hidden
+
+.article-listing__thumbnail
+  @extend .position-relative
+  @extend .flex-item-1
+  @extend .overflow-hidden
+  @extend .background-cover
+  min-height: 240px
+  min-width: 25%

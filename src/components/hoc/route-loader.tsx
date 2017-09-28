@@ -17,11 +17,8 @@ export interface ResolutionResult {
   resolution : any;
 }
 
-const Factory = function<T>(componentName : string, handler? : Handler) : React.ComponentClass<RouteProps<T>> {
+const Factory = function<T>(component_name : string, handler? : Handler) : React.ComponentClass<RouteProps<T>> {
   class Loader extends React.Component<RouteProps<T>, LoaderState> {
-
-    componentDidCatch() : void {
-    }
 
     async fetch(props : RouteProps<T> = this.props) : Promise<ResolutionResult> {
       const result : ResolutionResult = { resolution: null };
@@ -33,7 +30,7 @@ const Factory = function<T>(componentName : string, handler? : Handler) : React.
       }
 
       try {
-        const { default: component } = await LazyLoader<React.ComponentClass>(componentName);
+        const { default: component } = await LazyLoader<React.ComponentClass>(component_name);
         result.component = component;
       } catch (error) {
         return { error, resolution : null, component : null};
@@ -42,9 +39,9 @@ const Factory = function<T>(componentName : string, handler? : Handler) : React.
       return result;
     }
 
-    async componentWillReceiveProps(newProps : RouteProps<T>) : Promise<void> {
+    async componentWillReceiveProps(new_props : RouteProps<T>) : Promise<void> {
       this.setState({ component: null });
-      const r = await this.fetch(newProps);
+      const r = await this.fetch(new_props);
       this.setState(r);
     }
 

@@ -12,8 +12,8 @@ export class MissingDefinitionsError extends Error {
 }
 
 export async function load(locale : string) : Promise<boolean> {
-  const definitionUrl = `${config.definitionUrl}/${locale}.json`;
-  const r = await axios.get(definitionUrl);
+  const definition_url = `${config.definition_url}/${locale}.json`;
+  const r = await axios.get(definition_url);
 
   if (r.status !== 200 || typeof(r.data) !== "object") {
     throw new MissingDefinitionsError();

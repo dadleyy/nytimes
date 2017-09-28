@@ -1,3 +1,3 @@
 export default {
-  definitionUrl: "/i18n/definitions"
+  definition_url: "/i18n/definitions"
 };

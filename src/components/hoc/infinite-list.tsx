@@ -34,34 +34,34 @@ export type ListItemTransclusion<T> = React.ComponentType<ListItemProps<T>>;
 
 function Factory<T>(ItemType : ListItemTransclusion<T>) : React.ComponentClass<ListProps> {
   class List extends React.Component<ListProps> {
-    private scrollListener : ViewportListenerId | null = null;
-    private renderedItems : Array<RenderedChild> = [];
+    private scroll_listener : ViewportListenerId | null = null;
+    private rendered_items : Array<RenderedChild> = [];
     private loading : boolean = false;
 
     async componentDidMount() : Promise<void> {
       const { props } = this;
-      this.scrollListener = Viewport.on<ScrollPositions>("scroll", this.monitor, this);
+      this.scroll_listener = Viewport.on<ScrollPositions>("scroll", this.monitor, this);
       await this.transclude(props.delegate);
     }
 
-    async componentWillReceiveProps(newProps : ListProps) : Promise<void> {
-      await this.transclude(newProps.delegate);
+    async componentWillReceiveProps(new_props : ListProps) : Promise<void> {
+      await this.transclude(new_props.delegate);
     }
 
     componentWillUnmount() : void {
-      Viewport.off(this.scrollListener);
-      this.scrollListener = null;
+      Viewport.off(this.scroll_listener);
+      this.scroll_listener = null;
       this.unmountItems();
     }
 
     unmountItems() : void {
-      const { refs, renderedItems } = this;
-      const listContainer = refs["list"] as HTMLElement;
+      const { refs, rendered_items } = this;
+      const list_container = refs["list"] as HTMLElement;
 
-      for(let i = 0, c = renderedItems.length; i < c; i++) {
-        const item = renderedItems[i];
+      for(let i = 0, c = rendered_items.length; i < c; i++) {
+        const item = rendered_items[i];
         ReactDOM.unmountComponentAtNode(item.container);
-        listContainer.removeChild(item.container);
+        list_container.removeChild(item.container);
       }
     }
 
@@ -87,33 +87,33 @@ function Factory<T>(ItemType : ListItemTransclusion<T>) : React.ComponentClass<L
     }
 
     async transclude(delegate : ListDelegate, append : boolean = false) : Promise<void> {
-      const { refs, renderedItems } = this;
+      const { refs, rendered_items } = this;
       let results : DataResults;
 
       try {
         results = await delegate.load();
       } catch (error) {
-        return this.scrollListener ? this.setState({ error }) : null;
+        return this.scroll_listener ? this.setState({ error }) : null;
       }
 
       // Make sure we're not unmounted at this point.
-      if (!this.scrollListener) {
+      if (!this.scroll_listener) {
         return;
       }
 
-      if (renderedItems.length && append === true) {
+      if (rendered_items.length && append === true) {
         this.unmountItems();
       }
 
-      const listContainer = refs["list"] as HTMLElement;
+      const list_container = refs["list"] as HTMLElement;
 
       for(let i = 0, c = results.items.length; i < c; i++) {
         const item = results.items[i];
         const container = createElement("div");
         const component = <ItemType item={item} delegate={delegate} />;
         ReactDOM.render(component, container);
-        listContainer.appendChild(container);
-        this.renderedItems.push({ container, component });
+        list_container.appendChild(container);
+        this.rendered_items.push({ container, component });
       }
     }
 

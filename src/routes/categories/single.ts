@@ -9,7 +9,7 @@ export interface SingleCategoryRouteProps {
 export default {
   path: "/news/:category",
   key: "categories-single",
-  componentModule: "news/components/category-display",
+  component_module: "news/components/category-display",
   async resolve(props : RouteComponentProps<SingleCategoryRouteProps>) : Promise<any> {
     const { match } = props;
     const { category: categoryParam } = match.params;

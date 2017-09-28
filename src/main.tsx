@@ -17,7 +17,7 @@ class Application extends React.Component<any, any> {
 
     for (let i = 0, c = routes.length; i < c; i++) {
       const r = routes[i];
-      routeList.push(<Route {...r} component={r.componentModule && RouteLoader(r.componentModule, r.resolve)} />);
+      routeList.push(<Route {...r} component={r.component_module && RouteLoader(r.component_module, r.resolve)} />);
     }
 
     return (

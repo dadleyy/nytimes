@@ -1,6 +1,7 @@
 404_title: "404"
 404_text: "The page you are looking for does not exist."
 404_link: "Return home."
+by: "By"
 the_times: "The Times"
 nav:
   home: "Home"

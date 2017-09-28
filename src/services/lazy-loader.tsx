@@ -7,9 +7,9 @@ export interface LazyModule<T> {
   default : T;
 }
 
-export default function<T>(moduleName : string) : Promise<LazyModule<T>> {
+export default function<T>(module_name : string) : Promise<LazyModule<T>> {
   function load(resolve : ResolutionHandler, reject : ResolutionHandler) : void {
-    const deps = [moduleName];
+    const deps = [module_name];
 
     function extract(required : LazyModule<T>) : void {
       resolve(required);
