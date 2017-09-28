@@ -43,6 +43,7 @@ const Factory = function<T>(componentName : string, handler? : Handler) : React.
     }
 
     async componentWillReceiveProps(newProps : RouteProps<T>) : Promise<void> {
+      this.setState({ component: null });
       const r = await this.fetch(newProps);
       this.setState(r);
     }
@@ -64,7 +65,7 @@ const Factory = function<T>(componentName : string, handler? : Handler) : React.
       }
 
       return (
-        <section>
+        <section className="width-page margin-auto padding-tb-10">
           <p>{t("loading")}</p>
         </section>
       );

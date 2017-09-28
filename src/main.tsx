@@ -6,6 +6,7 @@ import { load as loadLocale } from "news/services/i18n";
 import Header from "news/components/header";
 import RouteLoader from "news/components/hoc/route-loader";
 import ApplicationError from "news/components/application-error";
+import Viewport from "news/services/viewport";
 
 const main = document.getElementById("main");
 
@@ -32,6 +33,7 @@ class Application extends React.Component<any, any> {
 }
 
 function start() : void {
+  Viewport.mount();
   render(<Application />, main);
 }
 

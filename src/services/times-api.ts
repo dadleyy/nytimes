@@ -10,8 +10,14 @@ export interface SearchPagination {
 }
 
 export enum SECTION {
-  HOME = "Home"
+  HOME = "Home",
+  WORLD = "World",
+  US = "U.S.",
+  POLITICS = "Politics",
+  NY = "New York"
 }
+
+const SECTION_FIELD_NAME = "news_desk";
 
 export class ArticleSearchBlueprint {
   sections? : Array<SECTION> = [SECTION.HOME];
@@ -24,7 +30,7 @@ export class ArticleSearchBlueprint {
     const queries = [];
 
     if(this.sections && this.sections.length) {
-      queries.push(`section_name:(${this.sections.join(" ")})`);
+      queries.push(`${SECTION_FIELD_NAME}:(${this.sections.join(" ")})`);
     }
 
     return queries.join(QUERY_DELIMETER);
@@ -32,8 +38,13 @@ export class ArticleSearchBlueprint {
 
 }
 
+export interface ArticleHeadline {
+  main : string;
+}
+
 export interface ArticleResult {
   pub_date : string;
+  headline : ArticleHeadline;
 }
 
 export interface TimesMeta {
