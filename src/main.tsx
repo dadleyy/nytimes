@@ -1,6 +1,9 @@
 import * as React from "react";
 import { render } from "react-dom";
+
+// Using HashRouter here because live-server redirects w/ hash.
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
+
 import routes from "news/routes";
 import { load as loadLocale } from "news/services/i18n";
 import Header from "news/components/header";

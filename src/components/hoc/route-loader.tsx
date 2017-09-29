@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Redirect } from "react-router-dom";
 import { RouteComponentProps as RouteProps } from "react-router";
 import { RouteResolutionHandler as Handler } from "news/route";
 import ApplicationError from "news/components/application-error";
@@ -7,9 +8,14 @@ import LazyLoader from "news/services/lazy-loader";
 import defer from "news/services/deferred";
 import t from "news/services/i18n";
 
+export interface ResolutionError extends Error {
+  code? : number;
+  location? : string;
+}
+
 export interface LoaderState {
   component? : React.ComponentClass;
-  error? : Error;
+  error? : ResolutionError;
   resolution : any;
 }
 
@@ -35,7 +41,7 @@ const Factory = function<T>(component_name : string, handler? : Handler) : React
       try {
         result.resolution = handler ? await handler(props) : { };
       } catch (error) {
-        return { error, resolution : null, component : null};
+        return { error, resolution : null, component : null };
       }
 
       try {
@@ -62,14 +68,17 @@ const Factory = function<T>(component_name : string, handler? : Handler) : React
     }
 
     render() : JSX.Element {
-      const { state } = this;
+      const { state, props } = this;
 
       if (state && state.component) {
-        return <state.component {...state.resolution} />;
+        return <state.component {...state.resolution} history={props.history} />;
       }
 
       if (state && state.error) {
-        return <ApplicationError error={state.error} />;
+        const { error } = state;
+        const is_redirect = error.code === 300 && error.location;
+
+        return is_redirect ? <Redirect to={error.location} /> : <ApplicationError error={state.error} />;
       }
 
       return (

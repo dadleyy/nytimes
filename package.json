@@ -7,7 +7,7 @@
     "asset_dist_dir": "./dist/news/assets",
     "locale_dist_dir": "./dist/news/i18n/definitions",
     "main_js_src": "./dist/news/assets/main.js",
-    "proxy_flags": "--proxy=/api:https://api.nytimes.com"
+    "server_flags": "--middleware=spa-ignore-assets --proxy=/api:https://api.nytimes.com"
   },
   "scripts": {
     "clean": "rm -rf ./dist",
@@ -19,11 +19,12 @@
     "build": "npm run build:scripts && npm run build:html && npm run build:styles && npm run build:i18n",
     "lint": "tslint -c ./tslint.json -p ./tsconfig.json",
     "test": "karma start --single-run=true",
-    "start": "NODE_TLS_REJECT_UNAUTHORIZED=0 live-server --middleware=spa-ignore-assets $npm_package_config_proxy_flags $npm_package_config_dist_dir"
+    "start": "NODE_TLS_REJECT_UNAUTHORIZED=0 live-server $npm_package_config_server_flags $npm_package_config_dist_dir"
   },
   "author": "Danny Hadley <dadleyy@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/history": "^4.6.0",
     "@types/react": "16.0.6",
     "@types/react-dom": "15.5.4",
     "@types/react-router": "^4.0.15",
@@ -62,6 +63,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "moment": "^2.18.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2"

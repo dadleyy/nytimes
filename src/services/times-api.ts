@@ -18,12 +18,25 @@ export enum SECTION {
 }
 
 const SECTION_FIELD_NAME = "news_desk";
+const ID_FIELD_NAME = "_id";
+
+export interface ArticleSearchBlueprintParams{
+  sections? : Array<SECTION>;
+  article_id? : string;
+}
 
 export class ArticleSearchBlueprint {
-  sections? : Array<SECTION> = [SECTION.HOME];
+  sections? : Array<SECTION>;
+  article_id? : string;
 
-  constructor(sections? : Array<SECTION>) {
-    this.sections = sections || [SECTION.HOME];
+  constructor(opts? : ArticleSearchBlueprintParams) {
+    if(opts && opts.sections) {
+      this.sections = opts.sections;
+    }
+
+    if(opts && opts.article_id) {
+      this.article_id = opts.article_id;
+    }
   }
 
   toString() : string {
@@ -31,6 +44,10 @@ export class ArticleSearchBlueprint {
 
     if(this.sections && this.sections.length) {
       queries.push(`${SECTION_FIELD_NAME}:(${this.sections.join(" ")})`);
+    }
+
+    if(this.article_id) {
+      queries.push(`${ID_FIELD_NAME}:(${this.article_id})`);
     }
 
     return queries.join(QUERY_DELIMETER);
@@ -58,17 +75,32 @@ export interface ArticleResult {
   multimedia : Array<MultiMediaObject>;
   snippet : string;
   byline : ArticleByline;
+  id : string;
 }
 
 export interface TimesMeta {
-  hits : Number;
-  offset : Number;
-  times : Number;
+  hits? : Number;
+  offset? : Number;
+  times? : Number;
 }
 
 export interface TimesResponse {
   docs : Array<ArticleResult>;
   meta : TimesMeta;
+}
+
+export interface TimesJSONResponse {
+  docs : Array<ArticleJSON>;
+  meta : TimesMeta;
+}
+
+interface ArticleJSON {
+  pub_date : string;
+  headline : ArticleHeadline;
+  multimedia : Array<MultiMediaObject>;
+  snippet : string;
+  byline : ArticleByline;
+  _id : string;
 }
 
 export function normalizeMedia(item : MultiMediaObject) : MultiMediaObject {
@@ -96,15 +128,18 @@ export default {
     }
 
     const { data } = await axios.get(`${url}?${params.toString()}`);
-    const response : TimesResponse = data.response;
+    const response : TimesJSONResponse = data.response;
+    const result : TimesResponse = { docs: [], meta: {} };
 
     for(let i = 0, c = response.docs.length; i < c; i++) {
       const item = response.docs[i];
-      const parsed_media = item.multimedia.map(normalizeMedia);
-      item.multimedia = parsed_media;
+      const { _id, multimedia, ...rest } = item;
+      const parsed_media = multimedia.map(normalizeMedia);
+      const parsed_doc : ArticleResult = { ...rest, id: _id, multimedia: parsed_media };
+      result.docs.push(parsed_doc);
     }
 
-    return response;
+    return result;
   }
 
 };

@@ -2,5 +2,5 @@ export default {
   exact: true,
   path: "/*",
   key: "not-found",
-  componentModule: "news/components/not-found"
+  component_module: "news/components/not-found"
 };

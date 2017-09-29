@@ -1,6 +1,8 @@
 import * as React from "react";
 import times, { ArticleResult, TimesMeta, ArticleSearchBlueprint, SECTION } from "news/services/times-api";
 import InfiniteList, { ListProps, ListItemProps, DataResults, LoadParams } from "news/components/hoc/infinite-list";
+import { Link } from "react-router-dom";
+import { calendar as formatDate } from "news/services/date-utils";
 import environment from "news/config/environment";
 import t from "news/services/i18n";
 
@@ -32,7 +34,7 @@ export class Delegate {
       return latest;
     }
 
-    const blueprint = new ArticleSearchBlueprint([this.category]);
+    const blueprint = new ArticleSearchBlueprint({ sections: [this.category] });
     const end_date = results.length >= 1 ? results.pop().end_date : new Date();
 
     const { meta, docs: items } = await times.search(blueprint, { end_date });
@@ -60,6 +62,16 @@ const Item : React.SFC<ItemProps> = function(props : ItemProps) : JSX.Element {
     backgroundImage: `url(${image.url})`
   };
 
+  const footer_contents : Array<JSX.Element> = [(
+    <span key="pub" className="article-listing__pub-date">{formatDate(item.pub_date)}</span>
+  )];
+
+  if(item.byline && item.byline.original) {
+    footer_contents.unshift(<span key="author" className="article-listing__author">{item.byline.original}</span>);
+  }
+
+  const article_path = `/articles/${item.id}`;
+
   // Render out our item...
   return (
     <article className="article-listing">
@@ -67,14 +79,14 @@ const Item : React.SFC<ItemProps> = function(props : ItemProps) : JSX.Element {
       </aside>
       <main className="article-listing__content">
         <header className="article-listing__title">
-          <p className="inherit-all padding-tb-1 ff-open semi-bold">{item.headline.main}</p>
+          <Link to={article_path}>
+            <p className="inherit-all padding-tb-1 ff-open semi-bold">{item.headline.main}</p>
+          </Link>
         </header>
         <section className="article-listing__snippet">
           <p>{item.snippet}</p>
         </section>
-        <footer className="article-listing__byline">
-          <p>{item.byline.original}</p>
-        </footer>
+        <footer className="article-listing__byline">{footer_contents}</footer>
       </main>
     </article>
   );

@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { Router } from "react-router-dom";
 import Viewport, { ViewportListenerId, ScrollPositions } from "news/services/viewport";
 import { create as createElement } from "news/services/dom-utils";
 
@@ -23,11 +24,13 @@ export interface ListItemProps<T> {
 
 export interface ListProps {
   delegate : ListDelegate;
+  history : History;
 }
 
 export interface RenderedChild {
   component : JSX.Element;
   container : HTMLElement;
+  group : HTMLElement;
 }
 
 export type ListItemTransclusion<T> = React.ComponentType<ListItemProps<T>>;
@@ -61,7 +64,7 @@ function Factory<T>(ItemType : ListItemTransclusion<T>) : React.ComponentClass<L
       for(let i = 0, c = rendered_items.length; i < c; i++) {
         const item = rendered_items[i];
         ReactDOM.unmountComponentAtNode(item.container);
-        list_container.removeChild(item.container);
+        item.group.removeChild(item.container);
       }
     }
 
@@ -87,7 +90,7 @@ function Factory<T>(ItemType : ListItemTransclusion<T>) : React.ComponentClass<L
     }
 
     async transclude(delegate : ListDelegate, append : boolean = false) : Promise<void> {
-      const { refs, rendered_items } = this;
+      const { refs, rendered_items, props } = this;
       let results : DataResults;
 
       try {
@@ -106,15 +109,23 @@ function Factory<T>(ItemType : ListItemTransclusion<T>) : React.ComponentClass<L
       }
 
       const list_container = refs["list"] as HTMLElement;
+      const group_wrapper = createElement("section", { classes: ["infinite-list__group"] });
 
       for(let i = 0, c = results.items.length; i < c; i++) {
         const item = results.items[i];
-        const container = createElement("div");
-        const component = <ItemType item={item} delegate={delegate} />;
+        const container = createElement("div", { classes: ["infite-list__item"] });
+
+        const component = (
+          <Router history={props.history}>
+            <ItemType item={item} delegate={delegate} />
+          </Router>
+        );
         ReactDOM.render(component, container);
-        list_container.appendChild(container);
-        this.rendered_items.push({ container, component });
+        group_wrapper.appendChild(container);
+        this.rendered_items.push({ container, component, group: group_wrapper });
       }
+
+      list_container.appendChild(group_wrapper);
     }
 
     render() : JSX.Element {
