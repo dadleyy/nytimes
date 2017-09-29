@@ -8,6 +8,8 @@ export interface EnvironmentConfig {
   placeholder_image_url : string;
 }
 
+const DEFAULT_PLACEHOLDER_IMAGE = "https://via.placeholder.com/500x500";
+
 let cache : EnvironmentConfig | null = null;
 
 function reload() : EnvironmentConfig {
@@ -41,7 +43,7 @@ export default {
       return cache.placeholder_image_url;
     }
 
-    return reload() ? cache.placeholder_image_url : null;
+    return reload() && cache.placeholder_image_url ? cache.placeholder_image_url : DEFAULT_PLACEHOLDER_IMAGE;
   },
 
   get times() : NYTimesConfig | null {

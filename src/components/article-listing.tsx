@@ -35,7 +35,6 @@ export class Delegate {
     const blueprint = new ArticleSearchBlueprint([this.category]);
     const end_date = results.length >= 1 ? results.pop().end_date : new Date();
 
-
     const { meta, docs: items } = await times.search(blueprint, { end_date });
 
     const earliest_date = new Date(items[items.length - 1].pub_date);

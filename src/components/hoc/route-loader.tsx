@@ -2,7 +2,9 @@ import * as React from "react";
 import { RouteComponentProps as RouteProps } from "react-router";
 import { RouteResolutionHandler as Handler } from "news/route";
 import ApplicationError from "news/components/application-error";
+import Spinner from "news/components/spinner";
 import LazyLoader from "news/services/lazy-loader";
+import defer from "news/services/deferred";
 import t from "news/services/i18n";
 
 export interface LoaderState {
@@ -15,6 +17,13 @@ export interface ResolutionResult {
   component? : React.ComponentClass;
   error? : any;
   resolution : any;
+}
+
+function delay(amount : number) : Promise<void> {
+  const { promise, resolve } = defer();
+  setTimeout(resolve, amount);
+
+  return promise;
 }
 
 const Factory = function<T>(component_name : string, handler? : Handler) : React.ComponentClass<RouteProps<T>> {
@@ -35,6 +44,8 @@ const Factory = function<T>(component_name : string, handler? : Handler) : React
       } catch (error) {
         return { error, resolution : null, component : null};
       }
+
+      await delay(1200);
 
       return result;
     }
@@ -63,7 +74,7 @@ const Factory = function<T>(component_name : string, handler? : Handler) : React
 
       return (
         <section className="width-page margin-auto padding-tb-10">
-          <p>{t("loading")}</p>
+          <Spinner />
         </section>
       );
     }

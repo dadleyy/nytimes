@@ -9,6 +9,9 @@ body, html
   min-width: 100%
   min-height: 100%
 
+html *
+  box-sizing: border-box
+
 .clearfix:before
   content: ''
   display: table
@@ -34,6 +37,7 @@ body, html
   @extend .overflow-inherit
   @extend .ellipsis-inherit
 
+@import "./components/spinner"
 @import "./components/header"
 @import "./components/article-listing"
 @import "./components/form/input"

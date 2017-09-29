@@ -45,7 +45,7 @@ export interface ArticleHeadline {
 export interface MultiMediaObject {
   url : string;
   type : string;
-  subtype: string;
+  subtype : string;
 }
 
 export interface ArticleByline {
@@ -75,6 +75,7 @@ export function normalizeMedia(item : MultiMediaObject) : MultiMediaObject {
   const { times: times_config } = environment;
   const normalized_url = `${times_config.apis["images"]}/${item.url}`;
   item.url = normalized_url;
+
   return item;
 }
 
