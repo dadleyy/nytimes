@@ -10,6 +10,7 @@ export interface SearchPagination {
 }
 
 export enum SECTION {
+  AUTOMOBILES = "Automobiles",
   HOME = "Home",
   WORLD = "World",
   US = "U.S.",
@@ -73,6 +74,7 @@ export interface ArticleResult {
   pub_date : string;
   headline : ArticleHeadline;
   multimedia : Array<MultiMediaObject>;
+  new_desk : string;
   snippet : string;
   byline : ArticleByline;
   id : string;
@@ -99,6 +101,7 @@ interface ArticleJSON {
   headline : ArticleHeadline;
   multimedia : Array<MultiMediaObject>;
   snippet : string;
+  new_desk : string;
   byline : ArticleByline;
   _id : string;
 }

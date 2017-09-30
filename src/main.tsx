@@ -9,9 +9,11 @@ import { load as loadLocale } from "news/services/i18n";
 import Header from "news/components/header";
 import RouteLoader from "news/components/hoc/route-loader";
 import ApplicationError from "news/components/application-error";
+import Popups from "news/services/popups";
 import Viewport from "news/services/viewport";
 
 const main = document.getElementById("main");
+const popups = document.getElementById("popups");
 
 class Application extends React.Component<any, any> {
 
@@ -37,6 +39,7 @@ class Application extends React.Component<any, any> {
 
 function start() : void {
   Viewport.mount();
+  Popups.mount(popups);
   render(<Application />, main);
 }
 

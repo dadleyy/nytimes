@@ -2,7 +2,7 @@ import * as React from "react";
 import times, { ArticleResult, TimesMeta, ArticleSearchBlueprint, SECTION } from "news/services/times-api";
 import InfiniteList, { ListProps, ListItemProps, DataResults, LoadParams } from "news/components/hoc/infinite-list";
 import { Link } from "react-router-dom";
-import { calendar as formatDate } from "news/services/date-utils";
+import Byline from "news/components/article-byline";
 import environment from "news/config/environment";
 import t from "news/services/i18n";
 
@@ -58,29 +58,26 @@ const Item : React.SFC<ItemProps> = function(props : ItemProps) : JSX.Element {
   const { item } = props;
   const { multimedia } = item;
   const [image = { url: placeholder_image_url }] = multimedia.filter(s => s.subtype === "xlarge");
-  const thumbStyle = {
+  const thumb_style = {
     backgroundImage: `url(${image.url})`
   };
 
-  const footer_contents : Array<JSX.Element> = [(
-    <span key="pub" className="article-listing__pub-date">{formatDate(item.pub_date)}</span>
-  )];
-
-  if(item.byline && item.byline.original) {
-    footer_contents.unshift(<span key="author" className="article-listing__author">{item.byline.original}</span>);
-  }
+  const footer_contents : Array<JSX.Element> = [
+    <Byline article={item} key="byline" className="flex-item-1"/>,
+    <div key="desk" className="article-listing__desk">{item.new_desk}</div>
+  ];
 
   const article_path = `/articles/${item.id}`;
 
   // Render out our item...
   return (
     <article className="article-listing">
-      <aside className="article-listing__thumbnail" style={thumbStyle}>
+      <aside className="article-listing__thumbnail" style={thumb_style}>
       </aside>
       <main className="article-listing__content">
         <header className="article-listing__title">
-          <Link to={article_path}>
-            <p className="inherit-all padding-tb-1 ff-open semi-bold">{item.headline.main}</p>
+          <Link to={article_path} className="fg-00 ellipsis block overflow-hidden">
+            <p className="inherit-all fg-00 padding-tb-1 ff-open semi-bold">{item.headline.main}</p>
           </Link>
         </header>
         <section className="article-listing__snippet">

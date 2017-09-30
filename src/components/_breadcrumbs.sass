@@ -1,0 +1,21 @@
+.breadcrumbs__crumb
+  @extend .ff-icon
+  @extend .ff-icon-chevron-right
+  @extend .position-relative
+  @extend .margin-right-4
+  @extend .padding-right-4
+
+.breadcrumbs__crumb:last-child
+  @extend .padding-right-0
+  @extend .margin-right-0
+
+.breadcrumbs__crumb:after
+  @extend .fg-04
+  @extend .block
+  @extend .position-absolute
+  margin-right: -4px
+  right: 0
+  top: 0
+
+.breadcrumbs__crumb:last-child:after
+  display: none

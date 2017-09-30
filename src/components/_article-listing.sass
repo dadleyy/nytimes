@@ -18,6 +18,8 @@
   @extend .fg-04
 
 .article-listing__byline
+  @extend .flex
+  @extend .width-10
   @extend .ff-open.light
   @extend .fg-05
   @extend .position-absolute
@@ -27,12 +29,19 @@
 
 .article-listing__author
   @extend .margin-right-4
+  @extend .ellipsis
+  @extend .overflow-hidden
+  @extend .no-wrap
+  max-width: 30%
+
+.article-listing__desk
+  @extend .margin-left-auto
 
 .article-listing__content
   @extend .position-relative
   @extend .flex-item-3
   @extend .margin-tb-8
-  @extend .padding-lr-7
+  @extend .margin-lr-7
   @extend .overflow-hidden
 
 .article-listing__thumbnail
