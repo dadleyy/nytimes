@@ -10,5 +10,7 @@ before_install:
 install:
   - npm install
 script:
+  - touch config.json
+  - echo "{}" > config.json
   - npm run build
   - npm run test
