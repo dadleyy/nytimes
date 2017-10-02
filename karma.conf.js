@@ -3,42 +3,49 @@ const path  = require("path");
 
 module.exports = function(config) {
   let browsers   = ["Phantom_Desktop"];
-  let frameworks = ["requirejs", "jasmine", "jasmine-ajax", "karma-typescript"];
+  let frameworks = ["requirejs", "jasmine", "karma-typescript"];
   let reporters  = ["mocha", "karma-typescript"];
   let ts_preprocessors = process.env["DISABLE_LINT"] ? ["karma-typescript"] : ["tslint", "karma-typescript"];
 
   let preprocessors = {
-    "src/**/*.ts"  : ts_preprocessors,
-    "src/**/*.tsx" : ts_preprocessors,
+    "src/**/*.ts": ts_preprocessors,
+    "src/**/*.tsx": ts_preprocessors,
 
-    "test/unit/**/*.js"      : ["babel"],
-    "test/unit/**/*.jsx"     : ["babel"],
-    "test/helpers.js"        : ["babel"],
-    "test/data/**/*.js"      : ["babel"],
-    "test/delegates/**/*.js" : ["babel"],
-    "test/dom/**/*.js" : ["babel"],
-    "test/unit.js"           : ["babelexternal"]
+    "test/unit/**/*.js": ["babel"],
+    "test/unit/**/*.jsx": ["babel"],
+    "test/helpers.jsx": ["babel"],
+    "test/config/**/*.js": ["babel"],
+    "test/unit.js": ["babelexternal"]
   };
 
   let files = [
-    "./node_modules/babel-polyfill/dist/polyfill.js",
-    {pattern: "./node_modules/react/dist/react.js", included: false},
-    {pattern: "./node_modules/react-dom/dist/react-dom.js", included: false},
-    {pattern: "./node_modules/react-router-dom/umd/react-router-dom.js", included: false},
+    "node_modules/babel-polyfill/dist/polyfill.js",
+    {pattern: "node_modules/react/umd/react.development.js", included: false},
+    {pattern: "node_modules/react-dom/umd/react-dom.development.js", included: false},
+    {pattern: "node_modules/react-router-dom/umd/react-router-dom.js", included: false},
+    {pattern: "node_modules/axios/dist/axios.js", included: false},
 
-    {pattern: "./test/data/**/*.js", included: false},
-    {pattern: "./test/delegates/**/*.js", included: false},
-    {pattern: "./test/dom/**/*.js", included: false},
+    {
+      pattern: path.resolve(require.resolve("jasmine-ajax")),
+      included: true,
+      served: true,
+      watched: false
+    },
 
-    {pattern: "./test/unit/**/*.spec.js", included: false},
-    {pattern: "./test/unit/**/*.spec.jsx", included: false},
+    // {pattern: "./test/data/**/*.js", included: false},
+    // {pattern: "./test/delegates/**/*.js", included: false},
+    // {pattern: "./test/dom/**/*.js", included: false},
 
-    {pattern: "./src/**/*.ts", included: false},
-    {pattern: "./src/**/*.tsx", included: false},
+    {pattern: "test/config/**/*.js", included: false},
+    {pattern: "test/unit/**/*.spec.js", included: false},
+    {pattern: "test/unit/**/*.spec.jsx", included: false},
 
-    {pattern: "./test/helpers.js", included: false},
+    {pattern: "src/**/*.ts", included: false},
+    {pattern: "src/**/*.tsx", included: false},
 
-    "./test/unit.js"
+    {pattern: "test/helpers.jsx", included: false},
+
+    "test/unit.js"
   ];
 
   function inject(content, file, done) {
@@ -49,13 +56,6 @@ module.exports = function(config) {
   function external() {
     return inject;
   }
-
-  function jasmineAjax() {
-    let pattern = path.resolve(require.resolve("jasmine-ajax"));
-    files.unshift({pattern, included: true, served: true, watched: false});
-  }
-
-  jasmineAjax.$inject = ["config.files"]
 
   let plugins = [
     "karma-tslint",
@@ -68,10 +68,12 @@ module.exports = function(config) {
     "karma-chrome-launcher",
     "karma-narrow-reporter",
     {"preprocessor:babelexternal": ["factory", external]},
-    {"framework:jasmine-ajax": ["factory", jasmineAjax]}
   ];
 
-  let options = { preprocessors, browsers, plugins, frameworks, files, reporters };
+  let options = {
+    basePath: "./",
+    preprocessors, browsers, plugins, frameworks, files, reporters
+  };
 
   options.customLaunchers = {
     "Phantom_Desktop": {
@@ -88,7 +90,11 @@ module.exports = function(config) {
   options.babelPreprocessor = {
     options: {
       presets: [["es2015"], ["react"]],
-      plugins: ["transform-es2015-modules-amd", "transform-object-rest-spread"]
+      plugins: [
+        "transform-es2015-modules-amd",
+        "transform-object-rest-spread",
+        "transform-async-to-generator"
+      ]
     },
     filename: function (file) {
       return file.originalPath.replace(/\.jsx$/, ".js");

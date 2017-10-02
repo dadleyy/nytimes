@@ -1,0 +1,63 @@
+.ff-serif
+  font-family: 'Merriweather', serif
+
+  &.light
+    font-weight: 300
+
+  &.semi-bold
+    font-weight: 600
+
+  &.bold
+    font-weight: 700
+
+.ff-open
+  font-family: 'Open Sans', sans-serif
+  font-weight: 400
+
+  &.light
+    font-weight: 300
+
+  &.semi-bold
+    font-weight: 600
+
+  &.bold
+    font-weight: 700
+
+.ff-lato
+  font-family: 'Lato', sans-serif
+
+html, body
+  @extend .ff-open
+
+.outline-none
+  outline: none
+
+.text-plain
+  text-decoration: none
+
+.upper
+  text-transform: uppercase
+
+.ellipsis
+  text-overflow: ellipsis
+
+.ellipsis-inherit 
+  text-overflow: inherit
+
+.no-wrap
+  white-space: nowrap
+
+@for $i from 1 through $font-size-steps
+  $amt: ($i * $font-size-inc) + unquote("rem")
+
+  .lh-#{$i}
+    line-height: $amt
+
+  .fs-#{$i}
+    font-size: $amt
+
+.fs-inherit 
+  font-size: inherit
+
+a
+  text-decoration: none

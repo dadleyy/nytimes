@@ -4,28 +4,40 @@
   "description": "ny time new aggregator built w/ react",
   "config": {
     "dist_dir": "./dist/news",
-    "asset_dist_dir": "./dist/news/assets"
+    "asset_dist_dir": "./dist/news/assets",
+    "locale_dist_dir": "./dist/news/i18n/definitions",
+    "main_js_src": "./dist/news/assets/main.js",
+    "server_flags": "--middleware=spa-ignore-assets --proxy=/api:https://api.nytimes.com"
   },
   "scripts": {
-    "build:html": "pug -o $npm_package_config_dist_dir ./src/index.pug",
+    "clean": "rm -rf ./dist",
+    "build:styles": "node-sass -o $npm_package_config_asset_dist_dir ./src/main.sass",
+    "build:html": "pug -o $npm_package_config_dist_dir --obj=./config.json ./src/index.pug",
     "build:scripts": "tsc -p ./tsconfig.json -outDir $npm_package_config_asset_dist_dir",
-    "build": "npm run build:scripts && npm run build:html",
+    "build:i18n:en": "yaml2json ./i18n/en.yaml > $npm_package_config_locale_dist_dir/en.json",
+    "build:i18n": "mkdir -p $npm_package_config_locale_dist_dir && npm run build:i18n:en",
+    "build": "npm run build:scripts && npm run build:html && npm run build:styles && npm run build:i18n",
     "lint": "tslint -c ./tslint.json -p ./tsconfig.json",
     "test": "karma start --single-run=true",
-    "start": "live-server --middleware=spa-ignore-assets ./dist/news"
+    "start": "NODE_TLS_REJECT_UNAUTHORIZED=0 live-server $npm_package_config_server_flags $npm_package_config_dist_dir"
   },
   "author": "Danny Hadley <dadleyy@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/history": "^4.6.0",
     "@types/react": "16.0.6",
     "@types/react-dom": "15.5.4",
     "@types/react-router": "^4.0.15",
     "@types/react-router-dom": "^4.0.7",
+    "@types/requirejs": "^2.1.31",
+    "ajv": "^5.2.3",
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "6.18.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-es2015-modules-amd": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-plugin-transform-runtime": "6.15.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "6.24.1",
     "jasmine-ajax": "^3.3.1",
@@ -41,14 +53,19 @@
     "karma-tslint": "1.0.2",
     "karma-typescript": "3.0.7",
     "live-server": "^1.2.0",
+    "node-http-proxy": "^0.2.3",
+    "node-sass": "^4.5.3",
     "pug-cli": "^1.0.0-alpha6",
     "requirejs": "^2.3.5",
     "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "typescript": "^2.5.2",
+    "yamljs": "^0.3.0"
   },
   "dependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "axios": "^0.16.2",
+    "moment": "^2.18.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2"
   }
 }

@@ -1,0 +1,11 @@
+@for $i from 0 through 10
+  $amt: ($i * 10) + unquote("%")
+
+  .height-#{$i}
+    height: $amt
+
+  .width-#{$i}
+    width: $amt
+
+.width-page
+  max-width: 1080px

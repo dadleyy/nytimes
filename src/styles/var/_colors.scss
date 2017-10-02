@@ -1,0 +1,18 @@
+$dark-blue-green: rgb(39,51,56);
+$active-blue: rgb(1,156,222);
+$dark-grey: rgb(84, 84, 84);
+$light-grey: rgb(175, 177, 177);
+$deep-blue: rgb(0,47,108);
+
+$color-list: (
+  'rgb(0,0,0)': '00',
+  'rgb(255,255,255)': '01',
+  'white': 'white',
+  'rgba(0,0,0,0.25)': 'shady',
+  'rgba(255,255,255,0.2)': 'lighten',
+  $dark-blue-green: '02',
+  $active-blue: '03',
+  $dark-grey: '04',
+  $light-grey: '05',
+  $deep-blue: '06',
+)

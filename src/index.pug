@@ -1,15 +1,21 @@
+- var config = new Buffer(JSON.stringify(environment)).toString('base64')
 doctype html
 html
   head
     meta(charset="utf-8")
     title NY Times News
+    link(href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Open+Sans:300,400,600,700" rel="stylesheet")
+    link(rel="stylesheet" href="/assets/main.css" type="text/css")
+    meta(name="config/environment" content=config)
   body
-    header#header
+    popups#popups
     main#main
-    footer#footer
-    script(src="//unpkg.com/history/umd/history.min.js")
-    script(src="//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js")
-    script(src="//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js")
+    script(src="//unpkg.com/axios/dist/axios.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/react/16.0.0/umd/react.development.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/react-dom/16.0.0/umd/react-dom.development.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/react-router-dom/4.2.2/react-router-dom.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js")
     script.
@@ -23,6 +29,7 @@ html
       define("react", [], function() { return window.React; });
       define("react-dom", [], function() { return window.ReactDOM; });
       define("react-router-dom", [], function() { return window.ReactRouterDOM; });
-      define("history", [], function() { return window.History; });
+      define("axios", [], function() { return window.axios; });
+      define("moment", [], function() { return window.moment; });
  
       require(["main"])

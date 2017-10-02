@@ -1,0 +1,20 @@
+@for $i from 0 through 3
+  .border-#{$i}
+    border-width: $i + unquote("px")
+    border-style: solid
+
+  .border-right-#{$i}
+    border-right-width: $i + unquote("px")
+    border-style: solid
+
+  .border-left-#{$i}
+    border-left-width: $i + unquote("px")
+    border-style: solid
+
+  .border-top-#{$i}
+    border-top-width: $i + unquote("px")
+    border-style: solid
+
+  .border-bottom-#{$i}
+    border-bottom-width: $i + unquote("px")
+    border-style: solid

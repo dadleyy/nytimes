@@ -1,0 +1,56 @@
+.article-listing
+  @extend .margin-bottom-10
+  @extend .shadow-2
+  @extend .flex
+
+.article-listing__title
+  @extend .margin-bottom-8
+  @extend .bold
+  @extend .fs-8
+  @extend .no-wrap
+  @extend .ellipsis
+  @extend .overflow-hidden
+
+.article-listing__snippet
+  @extend .margin-bottom-20
+  @extend .fs-5
+  @extend .lh-8
+  @extend .fg-04
+
+.article-listing__byline
+  @extend .flex
+  @extend .width-10
+  @extend .ff-open.light
+  @extend .fg-05
+  @extend .position-absolute
+  @extend .padding-tb-2
+  @extend .fs-4
+  bottom: 0
+
+.article-listing__author
+  @extend .margin-right-4
+  @extend .ellipsis
+  @extend .overflow-hidden
+  @extend .no-wrap
+  max-width: 30%
+
+.article-listing__desk
+  @extend .margin-left-auto
+
+.article-listing__content
+  @extend .position-relative
+  @extend .flex-item-3
+  @extend .margin-tb-8
+  @extend .margin-lr-7
+  @extend .overflow-hidden
+
+.article-listing__thumbnail
+  @extend .position-relative
+  @extend .flex-item-1
+  @extend .overflow-hidden
+  @extend .background-cover
+  min-height: 240px
+  min-width: 25%
+
+.article-listing__pub-date
+  @extend .fg-06

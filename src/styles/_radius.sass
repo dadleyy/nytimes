@@ -1,0 +1,5 @@
+@for $i from 0 through $radius-steps
+  $radius: ($i * $radius-inc) + unquote("px")
+
+  .radius-#{$i}
+    border-radius: $radius

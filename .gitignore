@@ -8,6 +8,7 @@ npm-debug.log
 test-results.xml
 .env
 /typings
+config.json
 
 tmp
 node_modules

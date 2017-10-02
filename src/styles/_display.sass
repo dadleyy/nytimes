@@ -1,0 +1,27 @@
+.block
+  display: block
+
+.flex
+  display: flex
+
+.flex-row
+  flex-direction: row
+
+.flex-center-items
+  align-items: center
+
+.justify-space-between
+  justify-content: space-between
+
+.flex-stretch-items
+  align-items: stretch
+
+.inline
+  display: inline
+
+.inline-block
+  display: inline-block
+
+@for $i from 0 through $flex-amt-steps
+  .flex-item-#{$i}
+    flex: $i
