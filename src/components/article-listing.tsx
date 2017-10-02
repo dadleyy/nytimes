@@ -1,5 +1,13 @@
 import * as React from "react";
-import times, { ArticleResult, TimesMeta, ArticleSearchBlueprint, SECTION } from "news/services/times-api";
+
+import times, {
+  ArticleSearchBlueprintParams,
+  ArticleResult,
+  TimesMeta,
+  ArticleSearchBlueprint,
+  SECTION
+} from "news/services/times-api";
+
 import InfiniteList, { ListProps, ListItemProps, DataResults, LoadParams } from "news/components/hoc/infinite-list";
 import { Link } from "react-router-dom";
 import Byline from "news/components/article-byline";
@@ -18,9 +26,11 @@ export class Delegate {
   private results : Array<ResultHistoryItem> = [];
   private category : SECTION;
   private cache : Array<ResultHistoryItem> = [];
+  private query : string;
 
-  constructor(category : SECTION) {
+  constructor(category : SECTION, query? : string) {
     this.category = category;
+    this.query = query;
   }
 
   async load(params : LoadParams, cacheResult? : boolean) : Promise<DataResults> {
@@ -34,10 +44,24 @@ export class Delegate {
       return latest;
     }
 
-    const blueprint = new ArticleSearchBlueprint({ sections: [this.category] });
+    const print_params : ArticleSearchBlueprintParams = { };
+
+    if(this.category) {
+      print_params.sections = [this.category];
+    }
+
+    if(this.query) {
+      print_params.query = this.query;
+    }
+
+    const blueprint = new ArticleSearchBlueprint(print_params);
     const end_date = results.length >= 1 ? results.pop().end_date : new Date();
 
     const { meta, docs: items } = await times.search(blueprint, { end_date });
+
+    if(items.length === 0) {
+      return { meta, items };
+    }
 
     const earliest_date = new Date(items[items.length - 1].pub_date);
 

@@ -1,10 +1,9 @@
 import { NavLink } from "react-router-dom";
 import * as React from "react";
 import t from "news/services/i18n";
-import Search, { Delegate as SearchDelegate } from "news/components/header/search";
+import Search from "news/components/header/search";
 
 const Header : React.SFC<any> = function(props : any) : JSX.Element {
-  const search_delegate = new SearchDelegate();
 
   return (
     <section className="clearfix width-page margin-auto">
@@ -16,8 +15,8 @@ const Header : React.SFC<any> = function(props : any) : JSX.Element {
           </h3>
         </div>
         <div className="margin-left-auto margin-right-6 flex-item-1 clearfix">
-          <div className="float-right">
-            <Search placeholder={t("search")} className="fg-white" delegate={search_delegate} />
+          <div className="float-right fg-white">
+            <Search />
           </div>
         </div>
       </main>

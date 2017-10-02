@@ -21,14 +21,16 @@ export enum SECTION {
 const SECTION_FIELD_NAME = "news_desk";
 const ID_FIELD_NAME = "_id";
 
-export interface ArticleSearchBlueprintParams{
+export interface ArticleSearchBlueprintParams {
   sections? : Array<SECTION>;
   article_id? : string;
+  query? : string;
 }
 
 export class ArticleSearchBlueprint {
   sections? : Array<SECTION>;
   article_id? : string;
+  query? : string;
 
   constructor(opts? : ArticleSearchBlueprintParams) {
     if(opts && opts.sections) {
@@ -37,6 +39,10 @@ export class ArticleSearchBlueprint {
 
     if(opts && opts.article_id) {
       this.article_id = opts.article_id;
+    }
+
+    if(opts && opts.query) {
+      this.query = opts.query;
     }
   }
 
@@ -124,6 +130,10 @@ export default {
     const params = new URLSearchParams();
     params.set("api-key", times_config.key);
     params.set("fq", blueprint.toString());
+
+    if(blueprint.query) {
+      params.set("q", blueprint.query);
+    }
 
     if(paging && paging.end_date) {
       const formatted = formatDate(paging.end_date);
