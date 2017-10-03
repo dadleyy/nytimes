@@ -1,4 +1,4 @@
-- var config = new Buffer(JSON.stringify(environment)).toString('base64')
+- var config = new Buffer(JSON.stringify(environment || {})).toString('base64')
 doctype html
 html
   head
